@@ -2,10 +2,12 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: scaleway-csi-attacher
+  labels:
+    {{- include "labels" . | indent 4 }}
 subjects:
   - kind: ServiceAccount
     name: scaleway-csi-controller
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: scaleway-csi-attacher
@@ -15,10 +17,12 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: scaleway-csi-controller
+  labels:
+    {{- include "labels" . | indent 4 }}
 subjects:
   - kind: ServiceAccount
     name: scaleway-csi-controller
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: scaleway-csi-provisioner
@@ -28,11 +32,28 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: csi-resizer-role
+  labels:
+    {{- include "labels" . | indent 4 }}
 subjects:
   - kind: ServiceAccount
     name: scaleway-csi-controller
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: external-resizer
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: scaleway-csi-snapshotter
+  labels:
+    {{- include "labels" . | indent 4 }}
+subjects:
+  - kind: ServiceAccount
+    name: scaleway-csi-controller
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: ClusterRole
+  name: scaleway-csi-snapshotter
   apiGroup: rbac.authorization.k8s.io

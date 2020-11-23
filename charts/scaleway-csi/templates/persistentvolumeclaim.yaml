@@ -1,0 +1,18 @@
+{{- range .Values.volumes }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .name }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "labels" $ | indent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .size }}
+  storageClassName: scw-bssd
+  volumeMode: Block
+---
+{{- end }}

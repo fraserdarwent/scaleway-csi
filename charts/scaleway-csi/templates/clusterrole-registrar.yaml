@@ -2,7 +2,8 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: scaleway-csi-node-driver-registrar
-  namespace: kube-system
+  labels:
+    {{- include "labels" . | indent 4 }}
 rules:
   - apiGroups: [""]
     resources: ["events"]

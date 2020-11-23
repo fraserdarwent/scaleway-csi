@@ -2,8 +2,9 @@ kind: DaemonSet
 apiVersion: apps/v1
 metadata:
   name: scaleway-csi-node
-  namespace: kube-system
-  labels: {}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "labels" . | indent 4 }}
 spec:
   selector:
     matchLabels:
@@ -13,6 +14,7 @@ spec:
       labels:
         app: scaleway-csi-node
         role: csi
+        {{- include "labels" . | indent 8 }}
     spec:
       serviceAccount: scaleway-csi-node
       nodeSelector:

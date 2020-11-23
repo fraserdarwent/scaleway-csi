@@ -2,7 +2,9 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: scaleway-csi-controller
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "labels" . | indent 4 }}
 spec:
   selector:
     matchLabels:
@@ -12,6 +14,7 @@ spec:
     metadata:
       labels:
         app: scaleway-csi-controller
+        {{- include "labels" . | indent 8 }}
     spec:
       priorityClassName: system-cluster-critical
       serviceAccount: scaleway-csi-controller
@@ -42,6 +45,13 @@ spec:
             timeoutSeconds: 3
             periodSeconds: 2
             failureThreshold: 5
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
         - name: csi-provisioner
           image: k8s.gcr.io/sig-storage/csi-provisioner:v2.0.0
           args:
@@ -56,6 +66,13 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
         - name: csi-attacher
           image: k8s.gcr.io/sig-storage/csi-attacher:v3.0.0
           args:
@@ -68,6 +85,13 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
         - name: csi-snapshotter
           image: k8s.gcr.io/sig-storage/csi-snapshotter:v2.1.1
           args:
@@ -80,11 +104,25 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"              
         - name: snapshot-controller
           image: k8s.gcr.io/sig-storage/snapshot-controller:v2.1.1
           args:
             - "--v=5"
             - "--leader-election"
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
         - name: csi-resizer
           image: k8s.gcr.io/sig-storage/csi-resizer:v1.0.0
           args:
@@ -97,6 +135,13 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
         - name: liveness-probe
           image: k8s.gcr.io/sig-storage/livenessprobe:v2.1.0
           args:
@@ -107,6 +152,13 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /csi
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
       volumes:
         - name: socket-dir
           emptyDir: {}

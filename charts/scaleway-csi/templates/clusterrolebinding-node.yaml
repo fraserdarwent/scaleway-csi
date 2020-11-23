@@ -2,10 +2,12 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: scaleway-csi-node-driver-registrar
+  labels:
+    {{- include "labels" . | indent 4 }}
 subjects:
   - kind: ServiceAccount
     name: scaleway-csi-node
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: scaleway-csi-node-driver-registrar

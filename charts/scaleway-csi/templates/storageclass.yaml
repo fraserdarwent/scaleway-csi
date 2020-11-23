@@ -2,7 +2,9 @@ kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
   name: scw-bssd
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "labels" . | indent 4 }}
 provisioner: csi.scaleway.com
 reclaimPolicy: Delete
 allowVolumeExpansion: true

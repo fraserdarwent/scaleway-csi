@@ -1,0 +1,3 @@
+volumes:
+  - name: test-block-volume
+    size: 10Gi
