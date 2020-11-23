@@ -52,9 +52,14 @@ volumes:
 
 ### Install the Chart
 
-This chart installs the required components
+Add the repository
 
 ```shell
-$ helm repo add fraserdarwent-scaleway-csi https://raw.githubusercontent.com/fraserdarwent/scaleway-csi/add-helm-chart/charts
-$ helm install scaleway-csi fraserdarwent-scaleway-csi/scaleway-csi --namespace scaleway --values values.yaml
+helm repo add fraserdarwent-scaleway-csi https://raw.githubusercontent.com/fraserdarwent/scaleway-csi/add-helm-chart/charts
+```
+
+Install the chart
+
+```shell
+helm install scaleway-csi fraserdarwent-scaleway-csi/scaleway-csi --namespace scaleway --values values.yaml
 ```
