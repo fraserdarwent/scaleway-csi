@@ -3,7 +3,7 @@ entries:
   scaleway-csi:
   - apiVersion: v1
     appVersion: 0.1.5
-    created: "2020-11-23T19:12:39.193487Z"
+    created: "2020-11-23T19:12:50.337145Z"
     description: A Helm chart to install the Scaleway Block Volume CSI Driver inside
       a Kubernetes cluster.
     digest: dcb712ffa84a5de9e7dd6728b47ab241d3058fd71709477db3474111406cb13e
@@ -16,6 +16,6 @@ entries:
     sources:
     - https://github.com/fraserdarwent/scaleway-csi
     urls:
-    - https://raw.githubusercontent.com/fraserdarwent/scaleway-csi/master/charts/scaleway-csi-0.0.1.tgz
+    - https://raw.githubusercontent.com/fraserdarwent/scaleway-csi/add-helm-chart/charts/scaleway-csi-0.0.1.tgz
     version: 0.0.1
-generated: "2020-11-23T19:12:39.192861Z"
+generated: "2020-11-23T19:12:50.336514Z"
